@@ -1,8 +1,6 @@
 /**
-*      This directive will draw a chart from the array of records provided
+* This directive will draw a combo chart from the array of records provided
 *
-*           Note : the relevant jsapi scripts should be already available
-*                  globally in the window.google object (see index.html)
 **/
 
 import {Directive, ElementRef, Input, OnInit} from "@angular/core";
@@ -21,16 +19,13 @@ export class ComboChartDirective implements OnInit {
     @Input() rowlabels: any[];
     @Input() columnlabels: any[];
     @Input() options: any;
-    @Input() charttype: any;
-
     // Constructor inject a ref to the element
     constructor(elementRef: ElementRef) {
         this.w = window;
         this.el = elementRef.nativeElement; // You cannot use elementRef directly !
-        // console.log("Native HTML :", this.el);
         if (!this.w.google) { console.error("Hey ! It seems the needed google script was not loaded ?"); };
     }
-    
+
     ngOnInit() {
         this.comboChartData();
     }
@@ -53,12 +48,9 @@ export class ComboChartDirective implements OnInit {
             }
             tempData.push(item);
         }
-
+        dataTable.addRows(tempData);
         (new this.w.google.visualization.ColumnChart(this.el))
             .draw(dataTable, this.options || {});
     }
-
-
-
 
 }

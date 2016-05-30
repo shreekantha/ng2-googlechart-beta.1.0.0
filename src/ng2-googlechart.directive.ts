@@ -1,8 +1,6 @@
 /**
 *      This directive will draw a chart from the array of records provided
 *
-*           Note : the relevant jsapi scripts should be already available
-*                  globally in the window.google object (see index.html)
 **/
 
 import {Directive, ElementRef, Input, OnInit} from "@angular/core";
@@ -16,22 +14,18 @@ export class ChartDirective implements OnInit {
 
     el: HTMLElement;
     w: any;  // To store the window, without generating errors in typescript on window.google
-    // private dataTable: new this.w.google.visualization.DataTable();
 
-    // Setter for content will trigger drawing (or refreshing)
     @Input() data: any[];
     @Input() rowlabels: any[];
     @Input() columnlabels: any[];
     @Input() options: any;
     @Input() charttype: any;
 
-
     // Constructor inject a ref to the element
     constructor(elementRef: ElementRef) {
         console.log("Constructing chart directive");
         this.w = window;
         this.el = elementRef.nativeElement; // You cannot use elementRef directly !
-        // console.log("Native HTML :", this.el);
         if (!this.w.google) { console.error("Hey ! It seems the needed google script was not loaded ?"); };
     }
     ngOnInit() {
